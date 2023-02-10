@@ -94,8 +94,9 @@ cvsParse(file);
 
 
 // ЛОГГЕР
-/* function logger(priem) {
-    let result = priem(2,3);
+/* function logger(priem, value1,  value2) {
+    let result = priem(value1,  value2);
+    console.log(result);
     const data = new Date();
     
     return function functi() {
@@ -103,11 +104,13 @@ cvsParse(file);
       }
   }
   
-  let fu = logger(testFunction);
+  let fu = logger(testFunction, 10, 20);
   console.log(fu());
+  
   
   function testFunction(a,b) {
         let c=6;
         let d=10;
         return a+b+c+d;
-  } */
+  }
+ */
