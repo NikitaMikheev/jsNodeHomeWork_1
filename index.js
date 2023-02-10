@@ -99,7 +99,7 @@ cvsParse(file);
     const data = new Date();
     
     return function functi() {
-        return result;
+        return priem;
       }
   }
   
