@@ -76,6 +76,18 @@ function cvsParse(file) {
     console.log(arrayJSON);
     let strJSON = JSON.stringify(arrayJSON);
     writeFileSync(file + '.json', strJSON); // !!! НАЗВАНИЕ СОЗДАВАЕМОГО ФАЙЛА ПЕРЕДАЕМ ПАРАМЕТРОМ КОНСОЛИ !!! */
+
+/*     let backToObj = JSON.parse(strJSON); ЗАДАЧА 6
+    console.log(backToObj)
+    for (let index = 0; index < backToObj.length; index++){
+      let key = 'new';
+      let value = 'value';
+      backToObj[index][key] = value;
+      
+    }
+    console.log(backToObj);
+    let secondJSON = JSON.stringify(backToObj);
+    console.log(secondJSON); */
 }
 
 cvsParse(file);
