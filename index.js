@@ -59,7 +59,11 @@ function cvsParse(file) {
     }
     console.log(arr);
     let arrayJSON = [];
-    let minusLength = arr[0].length-1;
+    let minusLength = -1;
+    if(arr.length>=arr[0].length) {
+      minusLength = arr.length - arr[0].length;
+  }
+  
     for (let index = 0; index < arr.length-minusLength; index++) {
         let count = index;
         for (let i = 1; i < arr.length-1; i++) {
