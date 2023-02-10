@@ -91,3 +91,23 @@ function cvsParse(file) {
 }
 
 cvsParse(file);
+
+
+// ЛОГГЕР
+/* function logger(priem) {
+    let result = priem(2,3);
+    const data = new Date();
+    
+    return function functi() {
+        return result;
+      }
+  }
+  
+  let fu = logger(testFunction);
+  console.log(fu());
+  
+  function testFunction(a,b) {
+        let c=6;
+        let d=10;
+        return a+b+c+d;
+  } */
