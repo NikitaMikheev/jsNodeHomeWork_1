@@ -122,17 +122,18 @@ function rewriteAndCheckJSON(backToObj, JSONfile) {
  function logger(priem, value1, value2) {
     let result = priem(value1, value2);
     const data = new Date();
-    
+
     return function functi() {
-        let strLogger = `Дата: ${data}` + `\nФункция: ${priem}` + `\nРезультат выполнения функции: ${result}` + `\nПараметры функции: ${value1} и ${value2}`
-        return writeFileSync('log.txt', strLogger);
+        let strLogger = `Дата: ${data} ` + `Функция: ${priem}` + `Результат выполнения функции: ${result} ` + `Параметры функции: ${value1} и ${value2}`
+        writeFileSync('log.txt', strLogger, {flag: 'a+'});
+        console.log(strLogger);
       }
   }
   
   let fu = logger(testFunction, 10, 20);
   fu();
   
-  
+
   function testFunction(a,b) {
         let c=6;
         let d=10;
