@@ -1,4 +1,4 @@
-import {readFileSync, writeFileSync} from "fs"; // импортируем встроенные функции модуля fs
+import {readFileSync, writeFileSync, openSync} from "fs"; // импортируем встроенные функции модуля fs
 
 // let str = '(Проверка ()()()на скобки вот ((такие))'; // Получение строки. ДЛЯ ЗАДАЧИ 1 (работает)
 
@@ -45,28 +45,33 @@ check(str); // Вызов функции */
 
 const args = process.argv;
 let file = args[2];
+const cd = openSync(file, 'r');
+let JSONfile = args[3];
 
 
 // ЗАДАЧА 5. Парсер csv файла в json. Работает 
 
-function cvsParse(file) {
-    let cvsString = readFileSync('testExcel.csv', {encoding: 'utf8'}); // получаем строки
+function cvsParse(cd, JSONfile) {
+    let cvsString = readFileSync(cd, {encoding: 'utf8'}); // получаем строки
 
     let cvsArr = cvsString.split(/\r\n|\r|\n/);
     let arr = [];
     for (let index = 0; index < cvsArr.length; index++) {
-        arr.push(cvsArr[index].split(';'));
+        arr.push(cvsArr[index].split(','));
     }
     console.log(arr);
     let arrayJSON = [];
-    let minusLength = -1;
+    let rowLengthcount = arr[0].length;
+    let columnLengthcount = arr.length-1;
     if(arr.length>=arr[0].length) {
-      minusLength = arr.length - arr[0].length;
+      let minuslength = arr.length - arr[0].length;
+      rowLengthcount = arr.length - minuslength;
+      columnLengthcount = arr.length[0]-1;
   }
   
-    for (let index = 0; index < arr.length-minusLength; index++) {
+    for (let index = 0; index < rowLengthcount; index++) {
         let count = index;
-        for (let i = 1; i < arr.length-1; i++) {
+        for (let i = 1; i < columnLengthcount; i++) {
 
             let key = arr[0][count];
             let value = arr[i][count];
@@ -74,19 +79,19 @@ function cvsParse(file) {
         }
     }
     console.log(arrayJSON);
-    let strJSON = JSON.stringify(arrayJSON);
-    writeFileSync(file + '.json', strJSON); // !!! НАЗВАНИЕ СОЗДАВАЕМОГО ФАЙЛА ПЕРЕДАЕМ ПАРАМЕТРОМ КОНСОЛИ !!! */
+    let strJSON = JSON.stringify(arrayJSON, null, " ");
+    writeFileSync(JSONfile + '.json', strJSON); // !!! НАЗВАНИЕ СОЗДАВАЕМОГО ФАЙЛА ПЕРЕДАЕМ ПАРАМЕТРОМ КОНСОЛИ !!! */
     return strJSON;
 }
 
-let backToObj = cvsParse(file);
+let backToObj = cvsParse(cd, JSONfile);
 
 
 
 
 
-rewriteAndCheckJSON(backToObj,file); //ЗАДАЧА 6. Проверка файла JSON и добавления поля. ПРОДОЛЖЕНИЕ ЗАДАЧИ 5. Теперь созданный файл мы проверяем на верный формат, добавляем в объекты поля, и парсим снова в JSON
-function rewriteAndCheckJSON(backToObj, file) {
+rewriteAndCheckJSON(backToObj, JSONfile); //ЗАДАЧА 6. Проверка файла JSON и добавления поля. ПРОДОЛЖЕНИЕ ЗАДАЧИ 5. Теперь созданный файл мы проверяем на верный формат, добавляем в объекты поля, и парсим снова в JSON
+function rewriteAndCheckJSON(backToObj, JSONfile) {
     let objFromJSON;
     try {
         try {
@@ -102,9 +107,9 @@ function rewriteAndCheckJSON(backToObj, file) {
         objFromJSON[index][key] = value;
         }
 
-        let secondJSON = JSON.stringify(objFromJSON);
+        let secondJSON = JSON.stringify(objFromJSON, null, " ");
 
-        writeFileSync(file + 'New.json', secondJSON); //создаст файл с таким же названием и прибавит New
+        writeFileSync(JSONfile + 'New.json', secondJSON); //создаст файл с таким же названием и прибавит New
     }
     catch(error) {
         throw new Error('Ошибка выполнения! Не удаётся перезаписать файл');
@@ -114,8 +119,8 @@ function rewriteAndCheckJSON(backToObj, file) {
 
 
 // ЗАДАЧА 7 ЛОГГЕР. Создает текстовый файл log в папке проекта, куда записывает Дату, функцию, результат и параметры
- function logger(priem, value1,  value2) {
-    let result = priem(value1,  value2);
+ function logger(priem, value1, value2) {
+    let result = priem(value1, value2);
     const data = new Date();
     
     return function functi() {
